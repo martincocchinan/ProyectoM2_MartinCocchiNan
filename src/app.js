@@ -6,7 +6,7 @@ import { notFound } from "./utils/errors.js";
 
 const app = express();
 
-const { loadEnvFile } = require('node:process');
+const { loadEnvFile } = import('node:process');
 
 if (process.env.NODE_ENV !== 'production') {
   loadEnvFile('.env');
