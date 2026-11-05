@@ -1,23 +1,23 @@
-openapi: 3.1.1
+miniblog: 1.0.0
 info:
-  title: Blog API
+  title: Miniblog
   version: 1.0.0
   description: API REST para gestionar autores y posts de un blog
   contact:
-    name: Equipo de Desarrollo
-    email: dev@blog.com
+    name: Martin Cocchi Nan
+    email: martin.cocchi@gmail.com
 
 servers:
   - url: http://localhost:3000
     description: Desarrollo local
-  - url: https://blog-api-production.up.railway.app
+  - url: https://proyectom2-martincocchinan.onrender.com/
     description: Producción
 
 paths:
   /authors:
     get:
       summary: Obtener todos los autores
-      description: Devuelve la lista completa de autores ordenados por ID
+      description: Devuelve la lista completa de autores
       tags:
         - Autores
       responses:
@@ -230,10 +230,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /authors/{authorId}/posts:
+    get:
+      summary: Obtener los posts de un autor
+      description: Devuelve los posts de un autor ordenados por ID
+      tags:
+        - Posts
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          description: ID del autor
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Lista de posts del autor
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /posts:
     get:
       summary: Obtener todos los posts
-      description: Devuelve la lista completa de posts ordenados por autor y fecha de creación
+      description: Devuelve la lista completa de posts
       tags:
         - Posts
       responses:
@@ -293,42 +329,6 @@ paths:
                 $ref: '#/components/schemas/Post'
         '400':
           description: Datos inválidos o autor inexistente
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '500':
-          description: Error del servidor
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-
-  /posts/author/{authorId}:
-    get:
-      summary: Obtener los posts de un autor
-      description: Devuelve los posts de un autor ordenados por ID
-      tags:
-        - Posts
-      parameters:
-        - name: authorId
-          in: path
-          required: true
-          description: ID del autor
-          schema:
-            type: integer
-            minimum: 1
-      responses:
-        '200':
-          description: Lista de posts del autor
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Post'
-        '400':
-          description: ID inválido
           content:
             application/json:
               schema:
