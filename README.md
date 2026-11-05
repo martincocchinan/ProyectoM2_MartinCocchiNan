@@ -274,19 +274,22 @@ Antes de cada test, los archivos de tests ejecutan `TRUNCATE ... RESTART IDENTIT
 - Usá una base de datos exclusiva para tests (por ejemplo `nombre_db_test`) con las tablas ya creadas con `setup.sql`.
 - Nunca apuntes los tests a una base de desarrollo o producción con datos reales.
 
+## Ejecutar los tests
+
+1. Instalar las dependencias: `npm install`
+2. Crear una base de datos de prueba (usar una separada; los tests vacían las tablas):
+   `createdb -U postgres miniblog_test`
+3. Crear las tablas: `psql -U postgres -d miniblog_test -f setup.sql`
+4. Copiar `.env.test.example` a `.env.test` y completar con tus credenciales.
+5. Si tu usuario no creó las tablas, darle acceso:
+   GRANT USAGE ON SCHEMA public TO your_user;
+  GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public TO your_user;
+  GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO your_user;
+6. `npm test`
+
 ### Ejecución en serie
 
-Como `authors.test.js` y `posts.test.js` comparten la misma base de datos, deben ejecutarse uno a la vez. Creá un `vitest.config.js` en la raíz:
-
-```js
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    fileParallelism: false,
-  },
-});
-```
+Como `authors.test.js` y `posts.test.js` comparten la misma base de datos, deben ejecutarse uno a la vez. por eso se agrego "test": "vitest run --no-file-parallelism" en el package.json para evitar errores en testing.
 
 ### Qué se prueba
 
