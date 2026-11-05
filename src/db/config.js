@@ -12,4 +12,4 @@ pool.on("error", (error) => {
     console.error("Error inesperado en el pool de PostgreSQL:", error.message);
 });
 
-module.exports = pool;
+export default pool;
