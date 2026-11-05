@@ -6,6 +6,12 @@ import { notFound } from "./utils/errors.js";
 
 const app = express();
 
+const { loadEnvFile } = require('node:process');
+
+if (process.env.NODE_ENV !== 'production') {
+  loadEnvFile('.env');
+}
+
 // Middleware
 app.use(express.json());
 

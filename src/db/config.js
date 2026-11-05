@@ -1,15 +1,15 @@
 import pg from "pg";
 
-const pool = new pg.Pool({
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+const { Pool } = require('pg');
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL
 });
+
+
 
 pool.on("error", (error) => {
     console.error("Error inesperado en el pool de PostgreSQL:", error.message);
 });
 
-export default pool;
+module.exports = pool;
