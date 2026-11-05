@@ -12,6 +12,10 @@ if (process.env.NODE_ENV !== 'production') {
   loadEnvFile('.env');
 }
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "API funcionando" });
+});
+
 // Middleware
 app.use(express.json());
 
