@@ -1,16 +1,16 @@
 openapi: 3.1.1
 info:
-  title: Blog API
+  title: Miniblog
   version: 1.0.0
   description: API REST para gestionar autores y posts de un blog
   contact:
-    name: Equipo de Desarrollo
-    email: dev@blog.com
+    name: Martin Cocchi Nan
+    email: martin.cocchi@gmail.com
 
 servers:
   - url: http://localhost:3000
     description: Desarrollo local
-  - url: https://blog-api-production.up.railway.app
+  - url: https://proyectom2-martincocchinan.onrender.com/
     description: Producción
 
 paths:
